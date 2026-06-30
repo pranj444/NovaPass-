@@ -133,7 +133,7 @@ Password:
 ## 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/vaultix.git
+git clone https://github.com/pranj444/NovaPass-.git
 ```
 
 ---
@@ -141,7 +141,7 @@ git clone https://github.com/yourusername/vaultix.git
 ## 2. Open Folder
 
 ```bash
-cd vaultix
+cd NovaPass
 ```
 
 ---
@@ -162,7 +162,7 @@ python app.py
 
 ---
 
-# 🌐 Open In Browser
+#  Open In Browser
 
 ```txt
 http://127.0.0.1:5000
