@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title> NovaPass Dashboard</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='dashboard.css') }}">
+
+</head>
+
+<body>
+
+    <!--Sidebar-->
+
+    <div class="sidebar">
+
+        <div>
+
+            <!-- Logo -->
+
+            <div class="logo-section">
+
+                <img
+                src="{{ url_for('static', filename='logo.png') }}"
+                class="sidebar-logo">
+
+                <h2>NovaPass</h2>
+
+            </div>
+
+            <!-- Side Menu -->
+
+            <div class="sidebar-menu">
+
+                <button
+                class="menu-btn active"
+                onclick="showSection('vault', this)">
+
+                    
+
+                    <span>
+                        Vault
+                    </span>
+
+                </button>
+
+                <button
+                class="menu-btn"
+                onclick="showSection('favorites', this)">
+
+                    
+
+                    <span>
+                        Favorites
+                    </span>
+
+                </button>
+
+                <button
+                class="menu-btn"
+                onclick="showSection('categories', this)">
+
+                  
+
+                    <span>
+                        Categories
+                    </span>
+
+                </button>
+
+                <button
+                class="menu-btn"
+                onclick="showSection('analytics', this)">
+
+                  
+
+                    <span>
+                        Analytics
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Logout -->
+
+        <div class="sidebar-bottom">
+
+            <button
+            onclick="logout()"
+            class="logout-btn">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- Main Part -->
+
+    <div class="main-content">
+
+        <!--Vault-->
+
+        <div
+        id="vaultSection"
+        class="section active-section">
+
+            <!-- Top -->
+
+            <div class="topbar">
+
+                <div>
+
+                    <h1>Password Vault</h1>
+
+                    <p>
+                        Manage your passwords securely
+                    </p>
+
+                </div>
+
+                <input
+                type="text"
+                id="search"
+                placeholder="Search passwords..."
+                onkeyup="searchPasswords()">
+
+            </div>
+
+            <!-- Add Password ( Main Function ) -->
+
+            <div class="add-box">
+
+                <input
+                type="text"
+                id="website"
+                placeholder="Website">
+
+                <input
+                type="text"
+                id="category"
+                placeholder="Category">
+
+                <input
+                type="text"
+                id="vault_username"
+                placeholder="Username">
+
+                <div class="password-input">
+
+                    <input
+                    type="password"
+                    id="vault_password"
+                    placeholder="Password">
+
+                    <button
+                    class="eye-btn"
+                    onclick="toggleAddPassword()">
+
+                        👁
+
+                    </button>
+
+                </div>
+
+                <button
+                class="save-btn"
+                onclick="addPassword()">
+
+                    Save Password
+
+                </button>
+
+            </div>
+
+        <!-- Password Card -->
+
+            <div class="vault-grid">
+
+                {% for item in passwords %}
+
+                <div class="password-card">
+
+                   
+                    <div class="card-left">
+
+                        <div class="site-icon">
+
+                            <img
+                            src="{{ url_for('static', filename='logo.png') }}"
+                            class="vault-logo">
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                {{ item.website }}
+                            </h3>
+
+                            <p>
+                                {{ item.username }}
+                            </p>
+
+                            <span class="category">
+                                {{ item.category }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    
+
+                    <div class="card-right">
+
+                        <div class="password-display">
+
+                            <input
+                            type="password"
+                            value="{{ item.password }}"
+                            id="pass{{ item.id }}"
+                            readonly>
+
+                            <button
+                            class="mini-btn"
+                            data-id="{{ item.id }}"
+                            onclick="togglePassword(this.dataset.id)">
+
+                                👁
+
+                            </button>
+
+                        </div>
+
+                        <div class="card-buttons">
+
+                            <button
+                            class="favorite-btn
+                            {% if item.favorite == 1 %}
+                            favorited
+                            {% endif %}"
+
+                            data-id="{{ item.id }}"
+
+                            onclick="toggleFavorite(this.dataset.id)">
+
+                                <img
+                            src="{{ url_for('static', filename='favourite.png') }}"
+                            class="vault-logo">
+
+                            </button>
+
+                            <button
+                            class="copy-btn"
+                            data-id="{{ item.id }}"
+                            onclick="copyPassword(this.dataset.id)">
+
+                                Copy
+
+                            </button>
+
+                            <button
+                            class="edit-btn"
+                            data-id="{{ item.id }}"
+                            onclick="editPassword(this.dataset.id)">
+
+                                Edit
+
+                            </button>
+
+                            <button
+                            class="delete-btn"
+                            data-id="{{ item.id }}"
+                            onclick="deletePassword(this.dataset.id)">
+
+                                Delete
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+ 
+<!--Favourite-->
+
+<div
+id="favoritesSection"
+class="section">
+
+    <div class="section-page">
+
+        <h1>Favorites</h1>
+
+        <p>
+            Your starred passwords.
+        </p>
+
+        <div class="vault-grid">
+
+            {% for item in passwords %}
+
+            {% if item.favorite == 1 %}
+
+            <div class="password-card">
+
+                
+
+                <div class="card-left">
+
+                    <div class="site-icon">
+
+                        <img
+                        src="{{ url_for('static', filename='logo.png') }}"
+                        class="vault-logo">
+
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            {{ item.website }}
+                        </h3>
+
+                        <p>
+                            {{ item.username }}
+                        </p>
+
+                        <span class="category">
+                            {{ item.category }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                
+
+                <div class="card-right">
+
+                    
+
+                    <div class="password-display">
+
+                        <input
+                        type="password"
+                        value="{{ item.password }}"
+                        id="favoritePass{{ item.id }}"
+                        readonly>
+
+                        <button
+                        class="mini-btn"
+                        data-id="{{ item.id }}"
+                        onclick="toggleFavoritePassword(this.dataset.id)">
+
+                            👁
+
+                        </button>
+
+                    </div>
+
+                  
+
+                    <div class="card-buttons">
+
+                        
+
+                        <button
+                        class="favorite-btn favorited"
+
+                        data-id="{{ item.id }}"
+
+                        onclick="toggleFavorite(this.dataset.id)">
+
+                            <img
+                            src="{{ url_for('static', filename='favourite.png') }}"
+                            class="vault-logo">
+
+                        </button>
+
+                       
+
+                        <button
+                        class="copy-btn"
+                        data-id="{{ item.id }}"
+                        onclick="copyFavoritePassword(this.dataset.id)">
+
+                            Copy
+
+                        </button>
+
+                        
+
+                        <button
+                        class="edit-btn"
+                        data-id="{{ item.id }}"
+                        onclick="editPassword(this.dataset.id)">
+
+                            Edit
+
+                        </button>
+
+                       
+
+                        <button
+                        class="delete-btn"
+                        data-id="{{ item.id }}"
+                        onclick="deletePassword(this.dataset.id)">
+
+                            Delete
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+        <!--Catagories Section ( Not Functional )-->
+
+        <div
+        id="categoriesSection"
+        class="section">
+
+            <div class="section-page">
+
+                <h1>Categories</h1>
+
+                <p>
+                    Organize passwords efficiently.
+                </p>
+
+                <div class="categories-grid">
+
+                    <div class="category-box">
+                        Social Media
+                    </div>
+
+                    <div class="category-box">
+                        Banking
+                    </div>
+
+                    <div class="category-box">
+                        Gaming
+                    </div>
+
+                    <div class="category-box">
+                        Development
+                    </div>
+
+                    <div class="category-box">
+                        Work
+                    </div>
+
+                    <div class="category-box">
+                        Personal
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--Analytics Section-->
+
+        <div
+        id="analyticsSection"
+        class="section">
+
+            <div class="section-page">
+
+                <h1>Analytics</h1>
+
+                <p>
+                    Real vault statistics.
+                </p>
+
+                <div class="analytics-grid">
+
+                    <div class="analytics-card">
+
+                        <h2>Total Passwords</h2>
+
+                        <span>
+                            {{ total_passwords }}
+                        </span>
+
+                    </div>
+
+                    <div class="analytics-card">
+
+                        <h2>Favorite Passwords</h2>
+
+                        <span>
+                            {{ favorite_count }}
+                        </span>
+
+                    </div>
+
+                    <div class="analytics-card">
+
+                        <h2>Weak Passwords</h2>
+
+                        <span>
+                            {{ weak_count }}
+                        </span>
+
+                    </div>
+
+                    <div class="analytics-card">
+
+                        <h2>Most Used</h2>
+
+                        <span>
+                            {{ most_used }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal/Notification/Popup -->
+
+    <div class="modal-overlay" id="modalOverlay">
+
+        <div class="custom-modal">
+
+            <h2 id="modalTitle">
+                Notification
+            </h2>
+
+            <p id="modalMessage">
+                Message
+            </p>
+
+            <!-- Edit Forms -->
+
+            <div id="editForm" class="edit-form">
+
+                <input
+                type="text"
+                id="editWebsite"
+                placeholder="Website">
+
+                <input
+                type="text"
+                id="editCategory"
+                placeholder="Category">
+
+                <input
+                type="text"
+                id="editUsername"
+                placeholder="Username">
+
+                <input
+                type="text"
+                id="editPassword"
+                placeholder="Password">
+
+            </div>
+
+            <div class="modal-buttons">
+
+                <button
+                class="modal-cancel"
+                onclick="closeModal()">
+
+                    Cancel
+
+                </button>
+
+                <button
+                class="modal-ok"
+                id="modalOkButton">
+
+                    OK
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script
+    src="{{ url_for('static', filename='dashboard.js') }}">
+    </script>
+
+</body>
+
+</html>

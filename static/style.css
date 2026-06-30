@@ -1,0 +1,341 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+/* Body */
+
+body{
+    width:100vw;
+    height:100vh;
+
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    position:relative;
+
+    background:
+    radial-gradient(circle at top,
+    rgba(255,0,120,0.30),
+    transparent 35%),
+
+    radial-gradient(circle at bottom,
+    rgba(80,120,255,0.35),
+    transparent 35%),
+
+    linear-gradient(
+        135deg,
+        #100018,
+        #25003d,
+        #12001f
+    );
+}
+
+body::before{
+    content:"";
+
+    position:absolute;
+    inset:0;
+
+    background:
+    radial-gradient(circle at 20% 20%,
+    rgba(255,0,120,0.18),
+    transparent 25%),
+
+    radial-gradient(circle at 80% 80%,
+    rgba(0,120,255,0.18),
+    transparent 25%);
+
+    filter:blur(90px);
+
+    z-index:0;
+}
+
+/* Login */
+
+.login-card{
+    position:relative;
+    z-index:1;
+
+    width:350px;
+    height:430px;
+
+    border-radius:35px;
+
+    background:rgba(255,255,255,0.10);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,0.25);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    padding-top:40px;
+}
+
+
+
+.avatar-circle{
+    width:100px;
+    height:100px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,0.08);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+
+    margin-bottom:45px;
+}
+
+.avatar-img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    border-radius:50%;
+}
+
+/* Input Container */
+
+.input-group{
+    width:75%;
+
+    margin-bottom:35px;
+}
+
+/* Input */
+
+.input-group input{
+    width:100%;
+
+    background:transparent;
+
+    border:none;
+    border-bottom:1px solid rgba(255,255,255,0.5);
+
+    outline:none;
+
+    color:white;
+
+    padding:12px 0;
+
+    font-size:16px;
+    font-weight:500;
+}
+
+
+.input-group input::placeholder{
+    color:rgba(255,255,255,0.75);
+}
+
+/* Btn */
+
+button{
+    width:75%;
+    height:46px;
+
+    margin-top:8px;
+
+    border:none;
+
+    border-radius:14px;
+   background:linear-gradient(
+        90deg,
+        hsl(315, 100%, 52%),
+        #3f63ff
+    );
+
+    color:white;
+
+    font-size:15px;
+    font-weight:600;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    opacity 0.25s ease;
+
+    box-shadow:
+    0 6px 18px rgba(63,99,255,0.18);
+}
+
+/* Btn Hover */
+
+button:hover{
+    transform:translateY(-2px);
+
+    box-shadow:
+    0 10px 25px rgba(63,99,255,0.28);
+}
+
+/* Btn Click */
+
+button:active{
+    transform:scale(0.98);
+}
+
+/* Modal Overlay */
+
+.modal-overlay{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,0.55);
+
+    backdrop-filter:blur(8px);
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    z-index:999;
+}
+
+/* Show Modal */
+
+.modal-overlay.show{
+    display:flex;
+
+    animation:
+    overlayFade 0.25s ease;
+}
+
+/* Modal */
+
+.custom-modal{
+    width:380px;
+
+    background:rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    border-radius:24px;
+
+    padding:28px;
+
+    color:white;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,0.35);
+
+    transform:
+    translateY(80px)
+    scale(0.95);
+
+    opacity:0;
+
+    animation:
+    modalSlideUp 0.35s cubic-bezier(
+        0.16,
+        1,
+        0.3,
+        1
+    ) forwards;
+}
+
+.custom-modal h2{
+    margin-bottom:12px;
+
+    font-size:24px;
+}
+
+.custom-modal p{
+    opacity:0.82;
+
+    margin-bottom:25px;
+
+    line-height:1.5;
+}
+
+/* Modal Btn */
+
+.modal-buttons{
+    display:flex;
+    justify-content:flex-end;
+}
+
+/* Modal "Ok" Btn */
+
+.modal-ok{
+    height:44px;
+
+    padding:0 24px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        90deg,
+        #7a005c,
+        #3f63ff
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.25s;
+}
+
+.modal-ok:hover{
+    transform:translateY(-2px);
+}
+
+/* Anim*/
+
+@keyframes overlayFade{
+
+    from{
+        opacity:0;
+    }
+
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes modalSlideUp{
+
+    from{
+        opacity:0;
+
+        transform:
+        translateY(80px)
+        scale(0.95);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+    }
+}

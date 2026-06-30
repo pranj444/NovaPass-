@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>NovaPass Login</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- Login -->
+
+    <div class="login-card">
+
+        <div class="avatar-circle">
+
+            <img
+            src="{{ url_for('static', filename='logo.png') }}"
+            class="avatar-img">
+
+        </div>
+
+        <!-- Username Input -->
+
+        <div class="input-group">
+
+            <input
+            type="text"
+            id="username"
+            placeholder="Username">
+
+        </div>
+
+        <!-- Password Input -->
+
+        <div class="input-group">
+
+            <input
+            type="password"
+            id="password"
+            placeholder="Password">
+
+        </div>
+
+
+        <button onclick="login()">
+
+            LOGIN
+
+        </button>
+
+    </div>
+
+    <!-- Modal/Notification/Popup -->
+
+    <div class="modal-overlay" id="modalOverlay">
+
+        <div class="custom-modal">
+
+            <h2 id="modalTitle">
+                Notification
+            </h2>
+
+            <p id="modalMessage">
+                Message
+            </p>
+
+            <div class="modal-buttons">
+
+                <button
+                class="modal-ok"
+                id="modalOkButton">
+
+                    OK
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script
+    src="{{ url_for('static', filename='script.js') }}">
+    </script>
+
+</body>
+
+</html>
