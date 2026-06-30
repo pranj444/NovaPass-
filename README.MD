@@ -141,7 +141,7 @@ git clone https://github.com/pranj444/NovaPass-.git
 ## 2. Open Folder
 
 ```bash
-cd NovaPass
+cd NovaPass-
 ```
 
 ---
